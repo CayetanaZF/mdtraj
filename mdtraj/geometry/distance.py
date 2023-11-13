@@ -35,7 +35,7 @@ __all__ = ['compute_distances_core', 'compute_distances',
            'find_closest_contact']
 
 def compute_distances_core(
-        positions,
+        traj,
         atom_pairs,
         unitcell_vectors = None,
         periodic=True,
@@ -71,7 +71,7 @@ def compute_distances_core(
     distances : np.ndarray, shape=(n_frames, num_pairs), dtype=float
         The distance, in each frame, between each pair of atoms.
     """
-
+    positions = traj.xyz
     xyz = ensure_type(positions, dtype=np.float32, ndim=3, name='traj.xyz', shape=(None, None, 3), warn_on_cast=False)
     pairs = ensure_type(atom_pairs, dtype=np.int32, ndim=2, name='atom_pairs', shape=(None, 2), warn_on_cast=False)
     if not np.all(np.logical_and(pairs < positions.shape[1], pairs >= 0)):
